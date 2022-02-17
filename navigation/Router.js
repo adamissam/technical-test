@@ -6,6 +6,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import Home from "../screens/Home";
 import Page from "../screens/Page";
 import { colors } from "../styles/colors";
+import PointOfSaleInformation from "../screens/PointOfSaleInformation";
 
 const Router = () => {
   return (
@@ -55,7 +56,7 @@ const BottomTabNavigator = () => (
     />
     <BottomTab.Screen
       name="Code !"
-      component={Page}
+      component={PageNavigation}
       options={{
         title: "Code !",
         tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
@@ -64,6 +65,22 @@ const BottomTabNavigator = () => (
   </BottomTab.Navigator>
 );
 
+const PageNavigation=()=>{
+  return(
+    <Stack.Navigator initialRouteName="page">
+      <Stack.Screen
+        name="page"
+        component={Page}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="sale"
+        component={PointOfSaleInformation}
+        options={{ headerShown: false, presentation: 'modal' }}
+      />
+    </Stack.Navigator>
+  )
+}
 const TabBarIcon = (props) => {
   return <FontAwesome size={25} {...props} />;
 };

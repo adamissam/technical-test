@@ -1,3 +1,4 @@
-export const someAction = () => ({
-  // TODO
+export const selectPointOfSale = (items) => ({
+  type: 'point/selectPointOfSale',
+  payload: items
 });
