@@ -28,7 +28,6 @@ const styles=StyleSheet.create({
         color:colors.primary,
         fontWeight:'bold',
         fontSize:17,
-        fontFamily:'SpaceMono'
     },
     textPosition:{
         color:colors.text,
