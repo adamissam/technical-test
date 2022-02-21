@@ -5,9 +5,16 @@ import Hours from "../components/Hours";
 import PointOfStale from "../components/PointOfSale";
 import { colors } from "../styles/colors";
 import { useSelector } from "react-redux";
-
+import Schedules from '../components/scheldules/index'
 const PointOfSaleInformation = () => {
   const { pointOfSaleSelected } = useSelector((state) => state);
+  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+const date = new Date();
+let day = weekday[date.getDay()];
+const WeeksOpening =pointOfSaleSelected.center.publicInformation.officeInformation.openingSchedules
+const toDayOpenning = WeeksOpening[day.toUpperCase()]
+console.log("toDayOpenning => ", toDayOpenning)
   if (
     pointOfSaleSelected.center == undefined ||
     pointOfSaleSelected.center == null
@@ -37,6 +44,7 @@ const PointOfSaleInformation = () => {
             }
             position={"à 3 mètre"}
           />
+          <Schedules morning={toDayOpenning.schedules[0]} afternoon={ toDayOpenning.schedules[1]} />
         </View>
       </View>
       <View>
@@ -68,7 +76,7 @@ const styles = StyleSheet.create({
   headerContainer: { flexDirection: "row" },
   secondHeaderContainer: {
     width: "70%",
-    alignItems: "flex-end",
+    // alignItems: "flex-end",
   },
   title: {
     color: "black",

@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React,{useCallback} from "react";
+import { getDistance } from "geolib";
+import React,{useCallback, useMemo} from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { selectPointOfSale } from "../../redux/action";
