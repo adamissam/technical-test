@@ -3,24 +3,28 @@ import React from "react";
 import Avatar from "../components/Avatar";
 import Hours from "../components/Hours";
 import PointOfStale from "../components/PointOfSale";
-import { colors } from "../styles/colors";
 import { useSelector } from "react-redux";
 import Schedules from '../components/scheldules/index'
 const PointOfSaleInformation = () => {
   const { pointOfSaleSelected } = useSelector((state) => state);
   const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const date = new Date();
+  let day = weekday[date.getDay()];
 
-const date = new Date();
-let day = weekday[date.getDay()];
-const WeeksOpening =pointOfSaleSelected.center.publicInformation.officeInformation.openingSchedules
-const toDayOpenning = WeeksOpening[day.toUpperCase()]
-console.log("toDayOpenning => ", toDayOpenning)
+// some time sheldules is not contain in the same location
+  const WeeksOpening =pointOfSaleSelected?.center?.publicInformation?.officeInformation?.openingSchedules ? pointOfSaleSelected.center.publicInformation.officeInformation.openingSchedules : pointOfSaleSelected?.publicInformation?.officeInformation?.openingSchedules
+  const toDayOpenning = WeeksOpening[day.toUpperCase()]
+
+  const adress = pointOfSaleSelected?.publicInformation?.address?.city ? pointOfSaleSelected.publicInformation.address.city :''
+  const postalCode = pointOfSaleSelected?.publicInformation?.address?.inseeCode ? pointOfSaleSelected.publicInformation.address.inseeCode : ''
+
   if (
     pointOfSaleSelected.center == undefined ||
     pointOfSaleSelected.center == null
   ) {
     return null;
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -36,15 +40,11 @@ console.log("toDayOpenning => ", toDayOpenning)
         <View style={styles.secondHeaderContainer}>
           <PointOfStale
             title={pointOfSaleSelected.center.name}
-            adress={
-              pointOfSaleSelected.center.publicInformation.address.city +
-              " " +
-              pointOfSaleSelected.center.publicInformation.address.locality
-                .postCode
-            }
-            position={"à 3 mètre"}
+            adress={adress}
+          postalCode={postalCode}
+            position={"à 752 mètres"}
           />
-          <Schedules morning={toDayOpenning.schedules[0]} afternoon={ toDayOpenning.schedules[1]} />
+         {WeeksOpening&& <Schedules morning={toDayOpenning.schedules[0]} afternoon={ toDayOpenning.schedules[1]} />}
         </View>
       </View>
       <View>
@@ -57,7 +57,7 @@ console.log("toDayOpenning => ", toDayOpenning)
         </View>
         <View>
           <Text style={styles.title}>Addresse :</Text>
-          <Text>
+          <Text >
             {pointOfSaleSelected?.publicInformation?.address?.fullAddress
               ? pointOfSaleSelected.publicInformation.address.fullAddress
               : "Aucune addresse"}
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
   title: {
     color: "black",
     fontWeight: "bold",
+    fontFamily:'SpaceMono'
   },
   hoursContainer: {
     width: "80%",

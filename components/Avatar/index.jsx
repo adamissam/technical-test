@@ -31,11 +31,12 @@ const styles = StyleSheet.create({
   date:{
       color:colors.primary,
       fontSize:13,
-      fontWeight:'bold'
+      fontWeight:'bold',
+      fontFamily:'SpaceMono'
   },
   time:{
       color: colors.text,
       fontSize:11,
-        opacity: 0.5,
+      opacity: 0.5,
   }
 });

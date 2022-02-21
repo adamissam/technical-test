@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { getDistance } from "geolib";
-import React,{useCallback, useMemo} from "react";
+import React,{useCallback} from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { selectPointOfSale } from "../../redux/action";
@@ -16,6 +15,8 @@ const CardPointOfSale = (props) => {
         dispatch(selectPointOfSale(item))
         navigation.navigate('sale')
     },[item])
+ const adress = item?.publicInformation?.address?.city ? item.publicInformation.address.city :''
+ const postalCode = item?.publicInformation?.address?.inseeCode ? item.publicInformation.address.inseeCode : ''
   return (
     <Pressable style={styles.container} onPress={handlePress}>
       <Avatar
@@ -25,9 +26,10 @@ const CardPointOfSale = (props) => {
       />
       <View style={styles.secondContainer}>
         <PointOfStale
-          title={item.center.name}
-          adress={item.center.publicInformation.address.city+' '+ item.center.publicInformation.address.locality.postCode}
-          position={"à 3 mètre"}
+          title={item?.center?.name}
+          adress={adress}
+          postalCode={postalCode}
+          position={"à 752 mètres"}
         />
         <Hours />
       </View>
@@ -48,6 +50,7 @@ const styles = StyleSheet.create({
   secondContainer: {
       width: '70%',
       flexDirection:'column',
+      paddingRight:10
   }
 });
 export default CardPointOfSale;
